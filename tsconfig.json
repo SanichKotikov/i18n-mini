@@ -4,7 +4,9 @@
     "target": "es2017",
     "module": "esnext",
     "moduleResolution": "node",
-    "lib": ["esnext"],
+    "lib": [
+      "esnext"
+    ],
     "outDir": "lib",
     "allowJs": false,
     "skipLibCheck": true,
@@ -29,6 +31,7 @@
     "src"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.test.ts"
   ]
 }

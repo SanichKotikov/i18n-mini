@@ -1,3 +1,3 @@
 # i18n-mini
 
-Tiny and simple internationalisation library.
+Tiny (~1.33 kB) and simple internationalisation library.
