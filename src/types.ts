@@ -8,7 +8,7 @@ export enum TemplateType {
 export type TemplatePlural = Partial<Record<Intl.LDMLPluralRule | '=0', TemplateMessage>>;
 export type Template = [name: string, type?: TemplateType, options?: string | TemplatePlural | TemplateMessage];
 export type TemplateMessage = string | readonly  (string | Template)[];
-export type I18nFormatTagFunc = (tag: string, child: string | (readonly string[]) | undefined) => any;
+export type I18nFormatTagFunc = (tag: string, child: string | string[] | undefined) => any;
 export type I18nRenderValue = (child?: any) => any;
 export type I18nValue = number | string | Date | I18nRenderValue;
 
@@ -25,7 +25,8 @@ export interface NumberOptions extends Intl.NumberFormatOptions {
   unitDisplay?: 'short' | 'long' | 'narrow';
 }
 
-export interface DateTimeOptions extends Intl.DateTimeFormatOptions {}
+export interface DateTimeOptions extends Intl.DateTimeFormatOptions {
+}
 
 export interface I18nPresets {
   dateTime?: Readonly<{ default: Readonly<DateTimeOptions> } & Record<string, Readonly<DateTimeOptions>>>;
@@ -49,13 +50,13 @@ export type I18nMessages = Readonly<Record<string, I18nMessage>>;
 
 export type SubscribeFunc = (callback: () => void) => () => void;
 
-export interface I18n {
+export interface I18n<T = string> {
   language: string;
   locales: Readonly<Record<string, I18nLocales>>;
   presets: Readonly<I18nPresets>;
-  setLanguage: (language: string) => I18n;
-  setLocales: (locales: Readonly<I18nLocales>) => I18n;
-  t: (message: I18nMessage, values?: Readonly<I18nValues>) => (readonly string[]) | string;
+  setLanguage: (language: string) => void;
+  setLocales: (locales: Readonly<I18nLocales>) => void;
+  t: (message: I18nMessage, values?: Readonly<I18nValues>) => T | T[];
   formatNumber: (value: number, options?: string | Readonly<NumberOptions>) => string;
   formatDateTime: (date: number | string | Date, options?: string | Readonly<DateTimeOptions>) => string;
 }

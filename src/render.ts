@@ -9,7 +9,7 @@ function format(
   message: string | Template,
   props: I18nValues = {},
   formatTag?: I18nFormatTagFunc,
-): (readonly string[]) | string | null {
+): string | string[] {
   if (typeof message === 'string') return message;
 
   const [id, type, options] = message;
@@ -26,7 +26,7 @@ function format(
       ? render(locale, presets, options, props, formatTag)
       : undefined;
 
-    if (isValueFunc(value)) return value(child as any) as any;
+    if (isValueFunc(value)) return value(child);
 
     if (formatTag) {
       const tag = isString(value) ? value : id;
@@ -34,17 +34,13 @@ function format(
     }
 
     return '';
-  }
-
-  else if (type === TemplateType.plural && isNumber(value) && isPlural(options)) {
-    if (value === 0 && options['=0']) return options['=0'] as any;
+  } else if (type === TemplateType.plural && isNumber(value) && isPlural(options)) {
+    if (value === 0 && options['=0']) return options['=0'] as string;
 
     const rule = new Intl.PluralRules(locale).select(value);
     const template = options[rule] || options.other || '';
     return render(locale, presets, template, props, formatTag);
-  }
-
-  else return String(value);
+  } else return String(value);
 }
 
 export function render(
@@ -53,14 +49,14 @@ export function render(
   message: TemplateMessage,
   props: I18nValues = {},
   formatTag?: I18nFormatTagFunc,
-): (readonly string[]) | string {
+): string | string[] {
   if (Array.isArray(message)) {
     const result = message.map((msg: string | Template) => (
       format(locale, presets, msg, props, formatTag)
-    ));
+    )) as string[];
 
-    return result.every(isString) ? result.join('') : result as any;
+    return result.every(isString) ? result.join('') : result;
   }
 
-  return message as any;
+  return message as string;
 }

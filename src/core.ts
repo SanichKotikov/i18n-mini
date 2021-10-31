@@ -21,50 +21,52 @@ export interface I18nOptions {
   formatTag?: I18nFormatTagFunc;
 }
 
-export function createI18n(options: I18nOptions): { i18n: I18n, subscribe: SubscribeFunc } {
+export interface I18nReturn<T = string> {
+  i18n: Readonly<I18n<T>>,
+  subscribe: SubscribeFunc,
+}
+
+export function createI18n<T = string>(options: I18nOptions): Readonly<I18nReturn<T>> {
   const subscribers = new Set<() => void>();
 
   function onUpdate() {
     [...subscribers.values()].forEach(func => func());
   }
 
-  const i18n: I18n = {
+  const i18n: I18n<T> = {
     language: options.language,
     locales: { ...options.locales },
     presets: { ...options.presets },
 
-    setLanguage: (value: string): I18n => {
+    setLanguage: (value: string) => {
       i18n.language = value;
       onUpdate();
-      return i18n;
     },
-    setLocales: (value: Readonly<I18nLocales>): I18n => {
+    setLocales: (value: Readonly<I18nLocales>) => {
       i18n.locales = {
         ...i18n.locales,
         [i18n.language]: { ...i18n.locales[i18n.language], ...value },
       };
       onUpdate();
-      return i18n;
     },
 
-    t: (msg: Readonly<I18nMessage>, props?: Readonly<I18nValues>): (readonly string[]) | string => {
-      const msgId: string = msg.id || msg.message;
+    t: (msg: Readonly<I18nMessage>, props?: Readonly<I18nValues>) => {
       return render(
         i18n.language,
         i18n.presets,
-        parser(i18n.locales[i18n.language]?.[msgId] || msg.message),
+        parser(i18n.locales[i18n.language]?.[msg.id || msg.message] || msg.message),
         props,
         options.formatTag,
-      );
+      ) as unknown as T | T[];
     },
-    formatNumber: (value: number, options?: string | Readonly<NumberOptions>): string => {
+    formatNumber: (value: number, options?: string | Readonly<NumberOptions>) => {
       const optionsValue: Readonly<NumberOptions> | undefined =
         (!options || isString(options))
           ? getPreset(i18n.presets.number, options)
           : options;
       return formatNumber(value, i18n.language, optionsValue);
     },
-    formatDateTime: (date: number | string | Date, options?: string | Readonly<DateTimeOptions>): string => {
+    formatDateTime: (date: number | string | Date, options?: string | Readonly<DateTimeOptions>) => {
       const dateValue = typeof date === 'string' ? new Date(date) : date;
       const optionsValue: Readonly<DateTimeOptions> | undefined =
         (!options || isString(options))
