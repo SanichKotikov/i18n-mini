@@ -1,0 +1,39 @@
+{
+  "name": "i18n-mini",
+  "version": "0.0.1",
+  "description": "Tiny and simple internationalisation library",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "sideEffects": false,
+  "scripts": {
+    "start": "tsc --watch",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SanichKotikov/i18n-mini.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SanichKotikov/i18n-mini/issues"
+  },
+  "homepage": "https://github.com/SanichKotikov/i18n-mini",
+  "author": "Sanich Kotikov <sancho@cdrpro.ru> (https://sanichkotikov.github.io)",
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "intl",
+    "i18n",
+    "internationalization",
+    "locale",
+    "localization",
+    "format",
+    "formatting",
+    "translate",
+    "translation"
+  ],
+  "devDependencies": {
+    "typescript": "4.4.4"
+  }
+}
