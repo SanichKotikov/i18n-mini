@@ -50,11 +50,14 @@ export function createI18n<T = string>(options: I18nOptions): Readonly<I18nRetur
       onUpdate();
     },
 
-    t: (msg: Readonly<I18nMessage>, props?: Readonly<I18nValues>) => {
+    t: (msg: string | Readonly<I18nMessage>, props?: Readonly<I18nValues>) => {
+      const id = isString(msg) ? undefined : msg.id;
+      const message = isString(msg) ? msg : msg.message;
+
       return render(
         i18n.language,
         i18n.presets,
-        parser(i18n.locales[i18n.language]?.[msg.id || msg.message] || msg.message),
+        parser(i18n.locales[i18n.language]?.[id || message] || message),
         props,
         options.formatTag,
       ) as unknown as T | T[];

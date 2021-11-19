@@ -52,7 +52,7 @@ export interface I18n<T = string> {
   presets: Readonly<I18nPresets>;
   setLanguage: (language: string) => void;
   setLocales: (locales: Readonly<I18nLocales>) => void;
-  t: (message: I18nMessage, values?: Readonly<I18nValues>) => T | T[];
+  t: (message: string | I18nMessage, values?: Readonly<I18nValues>) => T | T[];
   formatNumber: (value: number, options?: string | Readonly<NumberOptions>) => string;
   formatDateTime: (date: number | string | Date, options?: string | Readonly<DateTimeOptions>) => string;
 }

@@ -73,7 +73,9 @@ describe('core', () => {
     const translated = 'Тестовая строка';
 
     const { i18n } = createI18n({ language: 'en', locales: { [lang]: { [message]: translated } } });
+    expect(i18n.t(message)).toBe(message);
     expect(i18n.t({ id: message, message })).toBe(message);
+
     i18n.setLanguage(lang);
     expect(i18n.t({ message })).toBe(translated);
   });
