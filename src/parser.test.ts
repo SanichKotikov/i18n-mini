@@ -46,6 +46,17 @@ describe('parser', () => {
         },
         ],
       ]);
+
+    expect(parser('{count, plural, =0 {Nothing} one {{count} other item} other {{count} other items}}'))
+      .toEqual<TemplateMessage>([
+        [
+          'count', TemplateType.plural, {
+          '=0': 'Nothing',
+          one: [['count'], ' other item'],
+          other: [['count'], ' other items'],
+        },
+        ],
+      ]);
   });
 
   it('should parse tags', function () {

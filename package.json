@@ -1,6 +1,6 @@
 {
   "name": "i18n-mini",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Tiny and simple internationalisation library",
   "main": "lib/index.js",
   "module": "lib/index.js",

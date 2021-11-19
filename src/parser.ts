@@ -8,7 +8,7 @@ const WRAPPER = '%%%';
 const TYPES = 'num|number|plural|date';
 const PLURAL_RILES = '=0|zero|one|two|few|many|other';
 
-const PLURAL_ALL_REGEXP = new RegExp(`(${PLURAL_RILES})`, 'g');
+const PLURAL_ALL_REGEXP = new RegExp(`((${PLURAL_RILES})\\s{)`, 'g');
 const PLURAL_ITEM_REGEXP = new RegExp(`^(${PLURAL_RILES})\\s{(.+?)}$`);
 
 const TAG_ALL_REGEXP = /(<(\w+?)>(.+?)<\/\w+?>|<(\w+?)(| )\/>)/g;
