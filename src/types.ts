@@ -16,13 +16,9 @@ export type NumberStyle = 'decimal' | 'currency' | 'percent' | 'unit';
 
 export interface NumberOptions extends Intl.NumberFormatOptions {
   style?: NumberStyle;
-  compactDisplay?: 'short' | 'long';
   currencyDisplay?: 'symbol' | 'narrowSymbol' | 'code' | 'name';
   currencySign?: 'standard' | 'accounting';
   localeMatcher?: 'best fit' | 'lookup';
-  notation?: 'standard' | 'scientific' | 'engineering' | 'compact';
-  signDisplay?: 'auto' | 'never' | 'always' | 'exceptZero';
-  unitDisplay?: 'short' | 'long' | 'narrow';
 }
 
 export interface DateTimeOptions extends Intl.DateTimeFormatOptions {
